@@ -51,4 +51,4 @@ semilogy(c,mfmse,'-ro',c,mfpsnr,'-ms',c,mfsnr,'-bd');
 legend('MSE','PSNR','SNR',0);
 xlabel('Window Size');
 ylabel('Performacne Metrics');
-title('Variation in performance metrics with window size for Median Filter');
+
