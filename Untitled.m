@@ -1,23 +1,20 @@
-clear all;clc;%---Clear workspace and command window
-%---Read image form the specified path and assign it to In
+clear all;
+clc;
 In = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';'*.*','All Files' },'Select Image File');
-In = imread(In);%---Read iamge and assign it to In
-I_Pre = Preprocess(In);%---Preprocessing Original Image
-Ig = I_Pre.Ig;%---Assigning Image of double class to Ig
-figure(1);subplot(1,2,1);imshow(In);%---Show Original Image on first Figure window
-%---Check for RGB or Gray Scale Image
+In = imread(In);
+I_Pre = Preprocess(In);
+Ig = I_Pre.Ig;
+figure(1);subplot(1,2,1);imshow(In);
+
 if I_Pre.o==1
-    title('Original Grayscale Image');%---Title for Original Grayscale Image
+    title('Original Grayscale Image');
 else
-    title('Original RGB Image');%---Title for Original RGB Image
+    title('Original RGB Image');
 end
-figure(1);subplot(1,2,2);imshow(Ig);%---Show grayscale Image on first Figure window
-%---Title for Grayscale double class image of an Original Image
+figure(1);subplot(1,2,2);imshow(Ig);
+
 title('Grayscale double class image of an Original Image');
 
-%-----------------------------Analysis Starts-----------------------------%
-
-%-------------------------Median Filter Analysis--------------------------%
 
 %---Creating cell Fields for passing it to an excel file
 Fields = {'Filter','Window','MSE','PSNR','SNR'};
@@ -34,10 +31,12 @@ for c = [3 5 8 10]
     else
         i = 4;
     end
-    figure(2);subplot(2,2,i);imshow(I_anyl);%---Show Filtered Image on second Figure window
+    figure(2);subplot(2,2,i);
+    imshow(I_anyl);%---Show Filtered Image on second Figure window
     title(['Filtered Image using Median Filter; window size = ',num2str(c)]);
     QM(i) = MetricsMeasurement(Ig,I_anyl);%---Calculating Performance Metrics
-    mfmse(i) = QM(i).M_SE;mfpsnr(i) = QM(i).PSNR; mfsnr(i) = QM(i).SNR;
+    mfmse(i) = QM(i).M_SE;
+    mfpsnr(i) = QM(i).PSNR; mfsnr(i) = QM(i).SNR;
     QMxls = {'Median',c,QM(i).M_SE,QM(i).PSNR,QM(i).SNR};
     index_num = i+1;
     index = num2str(index_num);
